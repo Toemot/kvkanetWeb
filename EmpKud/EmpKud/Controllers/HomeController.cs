@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using EmpKud.Models;
+using EmpKud.ViewModel;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +10,27 @@ namespace EmpKud.Controllers
 {
     public class HomeController : Controller
     {
-        public JsonResult Index()
+        private readonly IEmployeeRepository _repository;
+
+        public HomeController(IEmployeeRepository employee)
         {
-            return Json(new { id = 1, name = "Merry Christmas" });
+            _repository = employee;
+        }
+
+        public ViewResult Index()
+        {
+            return View(_repository.GetAllEmployees());
+        }
+
+        public ViewResult Details(int id)
+        {
+            var viewModel = new HomeDetailsViewModel
+            {
+                Employee = _repository.GetEmployee(1),
+                PageTitle = "Employee Details"
+            };
+            
+            return View(viewModel);
         }
     }
 }
