@@ -13,10 +13,17 @@ namespace EmpKud.Models
         {
             _employees = new List<Employee>()
             {
-                new Employee { Id = 1, Name = "Rica Foo", Email = "r.foo@us.com", Department = "ITech"},
-                new Employee { Id = 2, Name = "Sese Beans", Email = "s.beans@us.com", Department = "FinTech"},
-                new Employee { Id = 3, Name = "Charles Rice", Email = "c.rice@us.com", Department = "payRoll"},
+                new Employee { Id = 1, Name = "Rica Foo", Email = "r.foo@us.com", Department = Dept.FinTech},
+                new Employee { Id = 2, Name = "Sese Beans", Email = "s.beans@us.com", Department = Dept.ITech},
+                new Employee { Id = 3, Name = "Charles Rice", Email = "c.rice@us.com", Department = Dept.PayRoll},
             };
+        }
+
+        public Employee Add(Employee employee)
+        {
+            employee.Id = _employees.Max(e => e.Id) + 1;
+            _employees.Add(employee);
+            return employee;
         }
 
         public IEnumerable<Employee> GetAllEmployees()
